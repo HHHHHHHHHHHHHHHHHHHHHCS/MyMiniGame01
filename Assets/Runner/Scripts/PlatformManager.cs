@@ -20,11 +20,13 @@ public class PlatformManager : MonoBehaviour
 
     private void Start()
     {
-        objectQueue = new Queue<Transform>(numberOfObjects);
+        GameEventManager.GameOver += GameStart;
+        GameEventManager.GameOver += GameOver;
 
+        objectQueue = new Queue<Transform>(numberOfObjects);
         for (int i = 0; i < numberOfObjects; i++)
         {
-            objectQueue.Enqueue(Instantiate(prefab));
+            objectQueue.Enqueue(Instantiate(prefab, Vector3.back * 1000f, Quaternion.identity));
         }
 
         nextPosition = startPosition;
@@ -73,5 +75,21 @@ public class PlatformManager : MonoBehaviour
         {
             nextPosition.y = maxY - maxGap.y;
         }
+    }
+
+    private void GameStart()
+    {
+        nextPosition = startPosition;
+        for (int i = 0; i < numberOfObjects; i++)
+        {
+            Recycle();
+        }
+
+        enabled = true;
+    }
+
+    private void GameOver()
+    {
+        enabled = false;
     }
 }
