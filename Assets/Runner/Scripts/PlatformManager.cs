@@ -10,6 +10,7 @@ public class PlatformManager : MonoBehaviour
     public Vector3 startPosition;
     public Vector3 minSize, maxSize, minGap, maxGap;
     public float minY, maxY;
+    public Booster booster;
 
     public Material[] materials;
     public PhysicMaterial[] physicMaterials;
@@ -54,6 +55,8 @@ public class PlatformManager : MonoBehaviour
         Vector3 position = nextPosition;
         position.x += scale.x * 0.5f;
         position.y += scale.y * 0.5f;
+        booster.SpawnIfAvailable(position);
+
         Transform o = objectQueue.Dequeue();
         o.localScale = scale;
         o.localPosition = position;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class SkylineManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class SkylineManager : MonoBehaviour
 
     private void Start()
     {
+        GameEventManager.GameStart += GameStart;
+        GameEventManager.GameOver += GameOver;
+
         objectQueue = new Queue<Transform>(numberOfObjects);
 
         for (int i = 0; i < numberOfObjects; i++)
@@ -53,5 +57,21 @@ public class SkylineManager : MonoBehaviour
         o.localPosition = position;
         nextPosition.x += scale.x;
         objectQueue.Enqueue(o);
+    }
+
+    private void GameStart()
+    {
+        nextPosition = startPosition;
+        for (int i = 0; i < numberOfObjects; i++)
+        {
+            Recycle();
+        }
+
+        enabled = true;
+    }
+
+    private void GameOver()
+    {
+        enabled = false;
     }
 }
