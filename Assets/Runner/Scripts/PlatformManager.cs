@@ -39,7 +39,7 @@ public class PlatformManager : MonoBehaviour
 
     private void Update()
     {
-        if (objectQueue.Peek().localPosition.x + recycleOffset < Runner.distanceTraveled)
+        if (objectQueue.Peek().localPosition.x + recycleOffset < Runner.Instance.distanceTraveled)
         {
             Recycle();
         }

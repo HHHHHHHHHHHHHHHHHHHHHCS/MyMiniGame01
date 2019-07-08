@@ -16,7 +16,7 @@ public class Booster : MonoBehaviour
 
     private void Update()
     {
-        if (transform.localPosition.x + recycleOffset < Runner.distanceTraveled)
+        if (transform.localPosition.x + recycleOffset < Runner.Instance.distanceTraveled)
         {
             gameObject.SetActive(false);
             return;
@@ -37,6 +37,12 @@ public class Booster : MonoBehaviour
 
     private void GameOver()
     {
+        gameObject.SetActive(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Runner.Instance.AddBoost();
         gameObject.SetActive(false);
     }
 }
