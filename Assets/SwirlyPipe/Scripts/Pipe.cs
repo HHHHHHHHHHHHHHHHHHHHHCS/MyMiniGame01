@@ -32,6 +32,7 @@ public class Pipe : MonoBehaviour
         vertices = new Vector3[pipeSegmentCount * curveSegmentCount * 4];
         float uStep = (2f * Mathf.PI) / curveSegmentCount;
         int iDelta = pipeSegmentCount * 4;
+        CreateFirstRing(uStep);
         for (int u = 2, i = iDelta; u <= curveSegmentCount; u++, i += iDelta)
         {
             CreateQuadRing(u * uStep, i);
@@ -40,7 +41,24 @@ public class Pipe : MonoBehaviour
         mesh.vertices = vertices;
     }
 
-    private void CreateQuadRing(float u,int i)
+
+    private void CreateFirstRing(float u)
+    {
+        float vStep = (2f * Mathf.PI) / pipeSegmentCount;
+
+        Vector3 vertexA = GetPointOnTorus(0, 0f);
+        Vector3 vertexB = GetPointOnTorus(u, 0f);
+
+        for (int v = 1, i = 0; v <= pipeSegmentCount; v++, i += 4)
+        {
+            vertices[i] = vertexA;
+            vertices[i + 1] = vertexA = GetPointOnTorus(0, v * vStep);
+            vertices[i + 2] = vertexB;
+            vertices[i + 3] = vertexB = GetPointOnTorus(u, v * vStep);
+        }
+    }
+
+    private void CreateQuadRing(float u, int i)
     {
         float vStep = (2f * Mathf.PI) / pipeSegmentCount;
         int ringOffset = pipeSegmentCount * 4;
