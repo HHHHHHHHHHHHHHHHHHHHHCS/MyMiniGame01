@@ -5,23 +5,57 @@ using UnityEngine;
 public class Pipe : MonoBehaviour
 {
     /// <summary>
-    /// 内圆环半径 管道半径
+    /// 横切面半径
     /// </summary>
-    public float curveRadius, pipeRadius;
+    public float pipeRadius;
 
     /// <summary>
-    /// 内圆环管道分割数量 管道分割数量
+    /// 横切面分割数量
     /// </summary>
-    public int curveSegmentCount, pipeSegmentCount;
+    public int pipeSegmentCount;
+
+    /// <summary>
+    /// 显示的距离
+    /// </summary>
+    public float ringDistance;
+
+    /// <summary>
+    /// 最大最小的随机半径
+    /// </summary>
+    public float minCurveRadius, maxCurveRadius;
+
+    /// <summary>
+    /// 最大最小的随机分割数量
+    /// </summary>
+    public int minCurveSegmentCount, maxCurveSegmentCount;
 
     private Mesh mesh;
     private Vector3[] vertices;
     private int[] triangles;
 
+    /// <summary>
+    /// 全身的角度
+    /// </summary>
+    private float curveAngle;
+
+    /// <summary>
+    /// 管道半径
+    /// </summary>
+    private float curveRadius;
+
+    /// <summary>
+    /// 管道数量
+    /// </summary>
+    private int curveSegmentCount;
+
     private void Awake()
     {
         GetComponent<MeshFilter>().mesh = mesh = new Mesh();
         mesh.name = "Pipe";
+
+        curveRadius = Random.Range(minCurveRadius, maxCurveRadius);
+        curveSegmentCount = Random.Range(minCurveSegmentCount, maxCurveSegmentCount);
+
         SetVertices();
         SetTriangles();
         mesh.RecalculateNormals();
@@ -30,8 +64,9 @@ public class Pipe : MonoBehaviour
     private void SetVertices()
     {
         vertices = new Vector3[pipeSegmentCount * curveSegmentCount * 4];
-        float uStep = (2f * Mathf.PI) / curveSegmentCount;
+        float uStep = ringDistance / curveRadius;
         int iDelta = pipeSegmentCount * 4;
+        curveAngle = uStep * curveSegmentCount * Mathf.Rad2Deg;
         CreateFirstRing(uStep);
         for (int u = 2, i = iDelta; u <= curveSegmentCount; u++, i += iDelta)
         {
@@ -101,7 +136,7 @@ public class Pipe : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        float uStep = (2f * Mathf.PI) / curveSegmentCount;
+        float uStep = ringDistance / curveRadius;
         float vStep = (2f * Mathf.PI) / pipeSegmentCount;
 
         for (int u = 0; u < curveSegmentCount; u++)
@@ -116,5 +151,20 @@ public class Pipe : MonoBehaviour
                 Gizmos.DrawSphere(point, 0.1f);
             }
         }
+    }
+
+    public void AlignWith(Pipe pipe)
+    {
+        float relativeRotation = Random.Range(0, curveRadius) * 360f / curveSegmentCount;
+
+        transform.SetParent(pipe.transform);
+
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.Euler(0f, 0f, -pipe.curveAngle);
+
+        transform.Translate(0, pipe.curveRadius, 0f);
+        transform.Rotate(relativeRotation, 0, 0);
+        transform.Translate(0f, -curveRadius, 0f);
+        transform.SetParent(pipe.transform.parent);
     }
 }
