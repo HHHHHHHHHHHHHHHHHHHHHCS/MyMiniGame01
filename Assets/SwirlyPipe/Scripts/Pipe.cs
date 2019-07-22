@@ -48,6 +48,16 @@ public class Pipe : MonoBehaviour
     /// </summary>
     private int curveSegmentCount;
 
+    /// <summary>
+    /// 管道半径
+    /// </summary>
+    public float CurveRadius => curveRadius;
+
+    /// <summary>
+    /// 管道角度
+    /// </summary>
+    public float CurveAngle => curveAngle;
+
     private void Awake()
     {
         GetComponent<MeshFilter>().mesh = mesh = new Mesh();
@@ -66,7 +76,7 @@ public class Pipe : MonoBehaviour
         vertices = new Vector3[pipeSegmentCount * curveSegmentCount * 4];
         float uStep = ringDistance / curveRadius;
         int iDelta = pipeSegmentCount * 4;
-        curveAngle = uStep * curveSegmentCount * Mathf.Rad2Deg;
+        curveAngle = uStep * curveSegmentCount * (360f / (2f * Mathf.PI));
         CreateFirstRing(uStep);
         for (int u = 2, i = iDelta; u <= curveSegmentCount; u++, i += iDelta)
         {
