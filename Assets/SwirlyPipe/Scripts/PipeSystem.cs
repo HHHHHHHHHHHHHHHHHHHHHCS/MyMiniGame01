@@ -17,26 +17,32 @@ public class PipeSystem : MonoBehaviour
         for (int i = 0; i < pipes.Length; i++)
         {
             Pipe pipe = pipes[i] = Instantiate(pipePrefab);
+            pipe.Generate();
             pipe.transform.SetParent(transform);
             if (i > 0)
             {
                 pipe.AlignWith(pipes[i - 1]);
             }
         }
+        AlignNextPipeWithOrigin();
     }
 
+    //用1开头 这样 摄像机背后就会有一个管道了
     public Pipe SetupFirstPipe()
     {
-        transform.localPosition = new Vector3(0f, -pipes[0].CurveRadius);
-        return pipes[0];
+        transform.localPosition = new Vector3(0f, -pipes[1].CurveRadius);
+        return pipes[1];
     }
 
+    //因为SetupFirstPipe 是1开头
     public Pipe SetupNextPipe()
     {
         ShiftPipes();
         AlignNextPipeWithOrigin();
-        transform.localPosition = new Vector3(0f, -pipes[0].CurveRadius);
-        return pipes[0];
+        pipes[pipes.Length - 1].Generate();
+        pipes[pipes.Length - 1].AlignWith(pipes[pipes.Length - 2]);
+        transform.localPosition = new Vector3(0f, -pipes[1].CurveRadius);
+        return pipes[1];
     }
 
     private void ShiftPipes()
@@ -50,20 +56,26 @@ public class PipeSystem : MonoBehaviour
         pipes[pipes.Length - 1] = temp;
     }
 
-
+    //因为用1开头了
     private void AlignNextPipeWithOrigin()
     {
-        Transform transformToAlign = pipes[0].transform;
-        for (int i = 1; i < pipes.Length; i++)
+        Transform transformToAlign = pipes[1].transform;
+        for (int i = 0; i < pipes.Length; i++)
         {
-            pipes[i].transform.SetParent(transformToAlign);
+            if (i != 1)
+            {
+                pipes[i].transform.SetParent(transformToAlign);
+            }
         }
 
         transformToAlign.localPosition = Vector3.zero;
         transformToAlign.localRotation = Quaternion.identity;
-        for (int i = 1; i < pipes.Length; i++)
+        for (int i = 0; i < pipes.Length; i++)
         {
-            pipes[i].transform.SetParent(transform);
+            if (i != 1)
+            {
+                pipes[i].transform.SetParent(transform);
+            }
         }
     }
 }

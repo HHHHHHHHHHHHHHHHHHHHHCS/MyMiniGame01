@@ -11,11 +11,15 @@ public class Player : MonoBehaviour
     private float distanceTraveled;
     private float deltaToRotation;
     private float systemRotation;
+    private Transform world;
+    private float worldRotation;
 
     private void Start()
     {
+        world = pipeSystem.transform.parent;
         currentPipe = pipeSystem.SetupFirstPipe();
-        deltaToRotation = 360f/(2f * Mathf.PI * currentPipe.CurveRadius);
+        deltaToRotation = 360f / (2f * Mathf.PI * currentPipe.CurveRadius);
+        SetupCurrentPipe();
     }
 
     private void Update()
@@ -29,9 +33,26 @@ public class Player : MonoBehaviour
             delta = (systemRotation - currentPipe.CurveAngle) / deltaToRotation;
             currentPipe = pipeSystem.SetupNextPipe();
             deltaToRotation = 360f / (2f * Mathf.PI * currentPipe.CurveRadius);
+            SetupCurrentPipe();
             systemRotation = delta * deltaToRotation;
         }
 
-        pipeSystem.transform.localRotation = Quaternion.Euler(0f,0f,systemRotation);
+        pipeSystem.transform.localRotation = Quaternion.Euler(0f, 0f, systemRotation);
+    }
+
+    private void SetupCurrentPipe()
+    {
+        deltaToRotation = 360f / (2f * Mathf.PI * currentPipe.CurveRadius);
+        worldRotation += currentPipe.RelativeRotation;
+        if (worldRotation < 0f)
+        {
+            worldRotation += 360f;
+        }
+        else if (worldRotation >= 360f)
+        {
+            worldRotation -= 360f;
+        }
+
+        world.localRotation = Quaternion.Euler(worldRotation, 0f, 0f);
     }
 }
