@@ -90,11 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ca9d64085eefe42a622a52a15b58de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curveRadius: 5
   pipeRadius: 1
-  curveSegmentCount: 20
-  pipeSegmentCount: 10
-  ringDistance: 1
+  pipeSegmentCount: 16
+  ringDistance: 0.77
   minCurveRadius: 4
   maxCurveRadius: 20
   minCurveSegmentCount: 4
