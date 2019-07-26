@@ -29,6 +29,11 @@ public class Pipe : MonoBehaviour
     /// </summary>
     public int minCurveSegmentCount, maxCurveSegmentCount;
 
+    /// <summary>
+    /// 管道障碍物的生成器
+    /// </summary>
+    public PipeItemGenerator[] generators;
+
     private Mesh mesh;
     private Vector3[] vertices;
     private Vector2[] uv;
@@ -69,6 +74,11 @@ public class Pipe : MonoBehaviour
     /// </summary>
     public float RelativeRotation => relativeRotation;
 
+    /// <summary>
+    /// 管道的数量
+    /// </summary>
+    public int CurveSegmentCount => curveSegmentCount;
+
     private void Awake()
     {
         GetComponent<MeshFilter>().mesh = mesh = new Mesh();
@@ -85,6 +95,7 @@ public class Pipe : MonoBehaviour
         SetTriangles();
         SetUV();
         mesh.RecalculateNormals();
+        generators[Random.Range(0,generators.Length)].GenerateItems(this);
     }
 
     private void SetVertices()
