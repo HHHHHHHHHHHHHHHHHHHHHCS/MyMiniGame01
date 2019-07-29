@@ -97,3 +97,13 @@ MonoBehaviour:
   maxCurveRadius: 20
   minCurveSegmentCount: 4
   maxCurveSegmentCount: 10
+  generators:
+  - {fileID: 2502441167207802799, guid: 5862739a4358eea47ae16bb76ff5a727, type: 3}
+  - {fileID: 2502441167207802799, guid: 5862739a4358eea47ae16bb76ff5a727, type: 3}
+  - {fileID: 1597893102843608487, guid: 5a373da3a7c1b9340bf7a003c58699b1, type: 3}
+  - {fileID: 1597893102843608487, guid: 5a373da3a7c1b9340bf7a003c58699b1, type: 3}
+  - {fileID: 1597893102843608487, guid: 5a373da3a7c1b9340bf7a003c58699b1, type: 3}
+  - {fileID: 8701885880889335655, guid: 025611018a678b24da09ff9033802a33, type: 3}
+  - {fileID: 2011725590201886763, guid: 0f173d7dc8a44e94ba0789bdf8a9b7f9, type: 3}
+  - {fileID: 5862626840840821469, guid: f79d283767e4d6243938402342ab03bf, type: 3}
+  - {fileID: 8042388878347870783, guid: e0f2d76372693db4ca8295c50aa5f3e9, type: 3}
