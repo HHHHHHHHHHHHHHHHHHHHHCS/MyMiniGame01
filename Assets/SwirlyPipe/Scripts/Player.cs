@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public UIRoot uiRoot;
     public PipeSystem pipeSystem;
     public float velocity;
     public float rotationVelocity;
@@ -15,13 +16,23 @@ public class Player : MonoBehaviour
     private float worldRotation,avatarRotation;
     private Transform world,rotater;
 
-    private void Start()
+
+    private void Awake()
     {
         world = pipeSystem.transform.parent;
         rotater = transform.GetChild(0);
+        gameObject.SetActive(false);
+    }
+
+    public void StartGame()
+    {
+        distanceTraveled = 0f;
+        avatarRotation = 0f;
+        systemRotation = 0f;
+        worldRotation = 0f;
         currentPipe = pipeSystem.SetupFirstPipe();
-        deltaToRotation = 360f / (2f * Mathf.PI * currentPipe.CurveRadius);
         SetupCurrentPipe();
+        gameObject.SetActive(true);
     }
 
     private void Update()
@@ -75,6 +86,7 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
+        uiRoot.EndGame(distanceTraveled);
         gameObject.SetActive(false);
     }
 }
