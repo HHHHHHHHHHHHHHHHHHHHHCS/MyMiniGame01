@@ -10,7 +10,7 @@ public class UIRoot : MonoBehaviour
 
     public Transform startGame, endGame, hudGame;
 
-    private Text endScoreText, nowScoreText, nowSpeedText;
+    private Text endScoreText, distanceText, velocityText;
 
     private void Awake()
     {
@@ -18,9 +18,12 @@ public class UIRoot : MonoBehaviour
         endGame.localScale = Vector3.zero;
         hudGame.localScale = Vector3.zero;
 
-        AddOnClick(startGame, "Speed_One", () => StartGame(1));
-        AddOnClick(startGame, "Speed_One", () => StartGame(2));
-        AddOnClick(startGame, "Speed_One", () => StartGame(3));
+        AddOnClick(startGame, "Speed_One", () => StartGame(0));
+        AddOnClick(startGame, "Speed_Two", () => StartGame(1));
+        AddOnClick(startGame, "Speed_Three", () => StartGame(2));
+
+        distanceText = hudGame.Find("ScoreText").GetComponent<Text>();
+        velocityText = hudGame.Find("SpeedText").GetComponent<Text>();
 
         endScoreText = endGame.Find("ScoreText").GetComponent<Text>();
         AddOnClick(endGame, "BackButton", GotoStartGame);
@@ -30,8 +33,13 @@ public class UIRoot : MonoBehaviour
     {
         startGame.localScale = Vector3.zero;
         hudGame.localScale = Vector3.one;
+        player.StartGame(speed);
+    }
 
-        player.StartGame();
+    public void SetValues(float distanceTraveled, float velocity)
+    {
+        distanceText.text = ((int) distanceTraveled * 10f).ToString();
+        velocityText.text = ((int) velocity * 10f).ToString();
     }
 
     public void EndGame(float distance)

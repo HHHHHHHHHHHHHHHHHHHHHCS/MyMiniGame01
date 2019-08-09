@@ -32,6 +32,16 @@ public class PipeSystem : MonoBehaviour
     //用1开头 这样 摄像机背后就会有一个管道了
     public Pipe SetupFirstPipe()
     {
+        for (int i = 0; i < pipes.Length; i++)
+        {
+            Pipe pipe = pipes[i];
+            pipe.Generate(i>emptyPipeCount);
+            if (i > 0)
+            {
+                pipe.AlignWith(pipes[i-1]);
+            }
+        }
+        AlignNextPipeWithOrigin();
         transform.localPosition = new Vector3(0f, -pipes[1].CurveRadius);
         return pipes[1];
     }

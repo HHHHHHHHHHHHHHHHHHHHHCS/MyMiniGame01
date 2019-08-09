@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15623,8 +15623,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1546608472}
-  - {fileID: 2058096626}
   - {fileID: 1438292049}
+  - {fileID: 2058096626}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15921,7 +15921,7 @@ RectTransform:
   - {fileID: 802918713}
   - {fileID: 164466740}
   m_Father: {fileID: 1234168839}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -16157,8 +16157,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiRoot: {fileID: 1234168840}
   pipeSystem: {fileID: 842007887}
-  velocity: 5
   rotationVelocity: 180
+  startVelocity: 3
+  accelerations:
+  - 0.025
+  - 0.05
+  - 0.1
 --- !u!4 &1902121342
 Transform:
   m_ObjectHideFlags: 0
@@ -16238,7 +16242,7 @@ RectTransform:
   - {fileID: 925150440}
   - {fileID: 755305536}
   m_Father: {fileID: 1234168839}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

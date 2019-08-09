@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/SwirlyPipe/Scenes/SwirlyPipe.unity
+    guid: c139393a31a0c434c98b06aa090ef186
   m_configObjects: {}
