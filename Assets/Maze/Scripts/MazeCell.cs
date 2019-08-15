@@ -2,7 +2,7 @@
 
 public class MazeCell : MonoBehaviour
 {
-    public Vector2Int coordinates;
+    public IntVector2 coordinates;
 
 
 }
