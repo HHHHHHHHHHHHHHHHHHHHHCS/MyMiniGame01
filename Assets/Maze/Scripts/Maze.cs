@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Maze : MonoBehaviour
 {
+    public MazePassage passagePrefab;
+
+    public MazeWall wallPrefab;
+
     public float generationStepDelay = 0.05f;
 
     public MazeCell cellPrefab;
@@ -48,12 +52,24 @@ public class Maze : MonoBehaviour
         MazeCell currentCell = activeCells[currentIndex];
         MazeDirection direction = MazeDirections.RandomValue;
         IntVector2 coordinates = currentCell.coordinates + direction.ToIntVector2();
-        if (ContainsCoordinates(coordinates) && GetCell(coordinates) == null)
+        if (ContainsCoordinates(coordinates))
         {
-            activeCells.Add(CreateCell(coordinates));
+            MazeCell neighbor = GetCell(coordinates);
+            if (neighbor == null)
+            {
+                neighbor = CreateCell(coordinates);
+                CreatePassage(currentCell, neighbor, direction);
+                activeCells.Add(neighbor);
+            }
+            else
+            {
+                CreateWall(currentCell, neighbor, direction);
+                activeCells.RemoveAt(currentIndex);
+            }
         }
         else
         {
+            CreateWall(currentCell, null, direction);
             activeCells.RemoveAt(currentIndex);
         }
     }
@@ -67,5 +83,24 @@ public class Maze : MonoBehaviour
         newCell.transform.localPosition =
             new Vector3(coordinates.x - size.x * 0.5f + 0.5f, 0f, coordinates.z - size.z * 0.5f + 0.5f);
         return newCell;
+    }
+
+    private void CreatePassage(MazeCell cell, MazeCell otherCell, MazeDirection direction)
+    {
+        MazePassage passage = Instantiate(passagePrefab);
+        passage.Initialize(cell,otherCell,direction);
+        passage = Instantiate(passagePrefab);
+        passage.Initialize(otherCell,cell,direction.GetOpposite());
+    }
+
+    private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction)
+    {
+        MazeWall wall = Instantiate(wallPrefab);
+        wall.Initialize(cell, otherCell, direction);
+        if (otherCell != null)
+        {
+            wall = Instantiate(wallPrefab);
+            wall.Initialize(otherCell, cell, direction.GetOpposite());
+        }
     }
 }

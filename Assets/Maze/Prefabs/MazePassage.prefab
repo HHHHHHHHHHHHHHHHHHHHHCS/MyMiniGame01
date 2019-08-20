@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3087439394557343003
+--- !u!1 &3335441220745537765
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5728244228615135650}
-  - component: {fileID: 3292991900782132719}
+  - component: {fileID: 6304027447461154829}
+  - component: {fileID: 6081409508805961555}
   m_Layer: 0
-  m_Name: Maza
+  m_Name: MazePassage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5728244228615135650
+--- !u!4 &6304027447461154829
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3087439394557343003}
+  m_GameObject: {fileID: 3335441220745537765}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,25 +31,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3292991900782132719
+--- !u!114 &6081409508805961555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3087439394557343003}
+  m_GameObject: {fileID: 3335441220745537765}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e1850a37d6db9844a606efe9daad7c5, type: 3}
+  m_Script: {fileID: 11500000, guid: f34c5b7967bc7c7479bfc425e82d5a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passagePrefab: {fileID: 6081409508805961555, guid: 72ca3d5516659064dbc635d992b641fc,
-    type: 3}
-  wallPrefab: {fileID: 183404046899828603, guid: 69bb77ad2266a9245aac683c56122187,
-    type: 3}
-  generationStepDelay: 0.05
-  cellPrefab: {fileID: 6500688387797050414, guid: c2da80ba5bb034d429afcd763b8d7505,
-    type: 3}
-  size:
-    x: 20
-    z: 20
+  cell: {fileID: 0}
+  otherCell: {fileID: 0}
+  direction: 0
