@@ -45,11 +45,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passagePrefab: {fileID: 6081409508805961555, guid: 72ca3d5516659064dbc635d992b641fc,
     type: 3}
-  wallPrefab: {fileID: 183404046899828603, guid: 69bb77ad2266a9245aac683c56122187,
-    type: 3}
-  generationStepDelay: 0.05
+  generationStepDelay: 0.01
   cellPrefab: {fileID: 6500688387797050414, guid: c2da80ba5bb034d429afcd763b8d7505,
     type: 3}
   size:
     x: 20
     z: 20
+  doorPrefab: {fileID: 6450008086232029448, guid: f87e3bc8335a410468719bfa51f4ca12,
+    type: 3}
+  doorProbability: 0.1
+  wallPrefabs:
+  - {fileID: 183404046899828603, guid: 69bb77ad2266a9245aac683c56122187, type: 3}
+  - {fileID: 183404046899828603, guid: 69bb77ad2266a9245aac683c56122187, type: 3}
+  - {fileID: 183404046899828603, guid: 69bb77ad2266a9245aac683c56122187, type: 3}
+  - {fileID: 183404046899828603, guid: 69bb77ad2266a9245aac683c56122187, type: 3}
+  - {fileID: 183404046899828603, guid: 69bb77ad2266a9245aac683c56122187, type: 3}
+  - {fileID: 183404046899828603, guid: 69bb77ad2266a9245aac683c56122187, type: 3}
+  - {fileID: 183404046899828603, guid: 69bb77ad2266a9245aac683c56122187, type: 3}
+  - {fileID: 5835919442782046845, guid: b05389a9691f013468b664f7fe47cc88, type: 3}
+  - {fileID: 5591732867175881655, guid: de01ccff374f3ee488ee29ac7509d936, type: 3}
+  - {fileID: 1189033468120246416, guid: f15333a0289558746b8a031eba551150, type: 3}

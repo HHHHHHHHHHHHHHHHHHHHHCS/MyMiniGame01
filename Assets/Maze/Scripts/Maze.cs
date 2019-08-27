@@ -6,13 +6,21 @@ public class Maze : MonoBehaviour
 {
     public MazePassage passagePrefab;
 
-    public MazeWall wallPrefab;
-
     public float generationStepDelay = 0.05f;
 
     public MazeCell cellPrefab;
 
     public IntVector2 size = new IntVector2(20, 20);
+
+    public MazeDoor doorPrefab;
+
+    [Range(0f, 1f)]
+    public float doorProbability;
+
+    public MazeWall[] wallPrefabs;
+
+
+
 
     private MazeCell[,] cells;
 
@@ -92,19 +100,20 @@ public class Maze : MonoBehaviour
 
     private void CreatePassage(MazeCell cell, MazeCell otherCell, MazeDirection direction)
     {
-        MazePassage passage = Instantiate(passagePrefab);
+        MazePassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
+        MazePassage passage = Instantiate(prefab);
         passage.Initialize(cell,otherCell,direction);
-        passage = Instantiate(passagePrefab);
+        passage = Instantiate(prefab);
         passage.Initialize(otherCell,cell,direction.GetOpposite());
     }
 
     private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction)
     {
-        MazeWall wall = Instantiate(wallPrefab);
+        MazeWall wall = Instantiate(wallPrefabs[Random.Range(0,wallPrefabs.Length)]);
         wall.Initialize(cell, otherCell, direction);
         if (otherCell != null)
         {
-            wall = Instantiate(wallPrefab);
+            wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]);
             wall.Initialize(otherCell, cell, direction.GetOpposite());
         }
     }
