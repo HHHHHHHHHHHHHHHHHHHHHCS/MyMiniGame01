@@ -14,15 +14,15 @@ public class Maze : MonoBehaviour
 
     public MazeDoor doorPrefab;
 
-    [Range(0f, 1f)]
-    public float doorProbability;
+    [Range(0f, 1f)] public float doorProbability;
 
     public MazeWall[] wallPrefabs;
 
-
-
+    public MazeRoomSettings[] roomSettings;
 
     private MazeCell[,] cells;
+
+    private List<MazeRoom> rooms = new List<MazeRoom>();
 
     public IntVector2 RandomCoordinates => new IntVector2(Random.Range(0, size.x), Random.Range(0, size.z));
 
@@ -102,19 +102,33 @@ public class Maze : MonoBehaviour
     {
         MazePassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
         MazePassage passage = Instantiate(prefab);
-        passage.Initialize(cell,otherCell,direction);
+        passage.Initialize(cell, otherCell, direction);
         passage = Instantiate(prefab);
-        passage.Initialize(otherCell,cell,direction.GetOpposite());
+        passage.Initialize(otherCell, cell, direction.GetOpposite());
     }
 
     private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction)
     {
-        MazeWall wall = Instantiate(wallPrefabs[Random.Range(0,wallPrefabs.Length)]);
+        MazeWall wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]);
         wall.Initialize(cell, otherCell, direction);
         if (otherCell != null)
         {
             wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]);
             wall.Initialize(otherCell, cell, direction.GetOpposite());
         }
+    }
+
+    private MazeRoom CreateRoom(int indexToExclude)
+    {
+        MazeRoom newRoom = ScriptableObject.CreateInstance<MazeRoom>();
+        newRoom.settingsIndex = Random.Range(0, roomSettings.Length);
+        if (newRoom.settingsIndex == indexToExclude)
+        {
+            newRoom.settingsIndex = (newRoom.settingsIndex + 1) % roomSettings.Length;
+        }
+
+        newRoom.settings = roomSettings[newRoom.settingsIndex];
+        rooms.Add(newRoom);
+        return newRoom;//TODO:
     }
 }
