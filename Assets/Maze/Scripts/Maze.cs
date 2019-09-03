@@ -51,7 +51,9 @@ public class Maze : MonoBehaviour
 
     private void DoFirstGenerationStep(List<MazeCell> activeCells)
     {
-        activeCells.Add(CreateCell(RandomCoordinates));
+        MazeCell newCell = CreateCell(RandomCoordinates);
+        newCell.Initialize(CreateRoom(-1));
+        activeCells.Add(newCell);
     }
 
     private void DoNextGenerationStep(List<MazeCell> activeCells)
@@ -104,6 +106,15 @@ public class Maze : MonoBehaviour
         MazePassage passage = Instantiate(prefab);
         passage.Initialize(cell, otherCell, direction);
         passage = Instantiate(prefab);
+        if (passage is MazeDoor)
+        {
+            otherCell.Initialize(CreateRoom(cell.room.settingsIndex));
+        }
+        else
+        {
+            otherCell.Initialize(cell.room);
+        }
+
         passage.Initialize(otherCell, cell, direction.GetOpposite());
     }
 
@@ -129,6 +140,6 @@ public class Maze : MonoBehaviour
 
         newRoom.settings = roomSettings[newRoom.settingsIndex];
         rooms.Add(newRoom);
-        return newRoom;//TODO:
+        return newRoom;
     }
 }

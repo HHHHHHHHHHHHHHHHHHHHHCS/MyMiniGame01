@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[SerializeField]
+[System.Serializable]
 public class MazeRoomSettings
 {
     public Material floorMaterial, wallMaterial;
