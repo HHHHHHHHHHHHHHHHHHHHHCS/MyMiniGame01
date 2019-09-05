@@ -8,11 +8,11 @@ public class Avatar : MonoBehaviour
 
     public float deathCountDown = -1f;
 
-    private Player player;
+    private SwirlyPipePlayer player;
 
     private void Awake()
     {
-        player = transform.root.GetComponent<Player>();
+        player = transform.root.GetComponent<SwirlyPipePlayer>();
     }
 
     private void Update()

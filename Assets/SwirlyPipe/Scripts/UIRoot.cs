@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UIRoot : MonoBehaviour
 {
-    public Player player;
+    public SwirlyPipePlayer player;
 
     public Transform startGame, endGame, hudGame;
 

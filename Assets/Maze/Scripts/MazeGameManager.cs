@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class MazeGameManager : MonoBehaviour
 {
-    public Maze mazePrefab;
+    public Maze mazePrefab;//todo:
+    public MazePlayer playerPrefab;
 
     private Maze mazeInstance;
+    private MazePlayer playerInstance;
 
     private void Start()
     {

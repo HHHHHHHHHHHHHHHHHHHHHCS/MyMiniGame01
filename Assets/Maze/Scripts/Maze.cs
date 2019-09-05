@@ -39,13 +39,29 @@ public class Maze : MonoBehaviour
     public IEnumerator Generate()
     {
         WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
+        yield return delay;
         cells = new MazeCell[size.x, size.z];
         List<MazeCell> activeCells = new List<MazeCell>();
         DoFirstGenerationStep(activeCells);
         while (activeCells.Count > 0)
         {
-            yield return delay;
+            //yield return delay;
             DoNextGenerationStep(activeCells);
+        }
+    }
+
+    private void CreatePassageInSameRoom(MazeCell cell, MazeCell otherCell, MazeDirection direction)
+    {
+        MazePassage passage = Instantiate(passagePrefab);
+        passage.Initialize(cell,otherCell,direction);
+        passage = Instantiate(passagePrefab);
+        passage.Initialize(otherCell,cell,direction.GetOpposite());
+        if (cell.room != otherCell.room)
+        {
+            MazeRoom roomToAssimilate = otherCell.room;
+            cell.room.Assimilate(roomToAssimilate);
+            rooms.Remove(roomToAssimilate);
+            Destroy(roomToAssimilate);
         }
     }
 
@@ -77,6 +93,10 @@ public class Maze : MonoBehaviour
                 neighbor = CreateCell(coordinates);
                 CreatePassage(currentCell, neighbor, direction);
                 activeCells.Add(neighbor);
+            }
+            else if (currentCell.room.settingsIndex==neighbor.room.settingsIndex)
+            {
+                CreatePassageInSameRoom(currentCell,neighbor,direction);
             }
             else
             {

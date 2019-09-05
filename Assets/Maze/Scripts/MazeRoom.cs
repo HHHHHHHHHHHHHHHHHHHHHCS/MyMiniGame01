@@ -10,6 +10,14 @@ public class MazeRoom : ScriptableObject
 
     private List<MazeCell> cells = new List<MazeCell>();
 
+    public void Assimilate(MazeRoom room)
+    {
+        for (int i = 0; i < room.cells.Count; i++)
+        {
+            Add(room.cells[i]);
+        }
+    }
+
     public void Add(MazeCell cell)
     {
         cell.room = this;
