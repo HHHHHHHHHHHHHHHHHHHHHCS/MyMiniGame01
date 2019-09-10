@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MazeGameManager : MonoBehaviour
 {
-    public Maze mazePrefab;//todo:
+    public Maze mazePrefab; //todo:
     public MazePlayer playerPrefab;
 
     private Maze mazeInstance;
@@ -12,7 +12,7 @@ public class MazeGameManager : MonoBehaviour
 
     private void Start()
     {
-        BeginGame();
+        StartCoroutine(BeginGame());
     }
 
     private void Update()
@@ -23,16 +23,29 @@ public class MazeGameManager : MonoBehaviour
         }
     }
 
-    private void BeginGame()
+    private IEnumerator BeginGame()
     {
+        Camera mainCam = Camera.main;
+
+        mainCam.clearFlags = CameraClearFlags.Skybox;
+        mainCam.rect = new Rect(0f, 0f, 1f, 1f);
         mazeInstance = Instantiate(mazePrefab);
-        StartCoroutine(mazeInstance.Generate());
+        yield return StartCoroutine(mazeInstance.Generate());
+        playerInstance = Instantiate(playerPrefab);
+        playerInstance.SetLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates));
+        mainCam.clearFlags = CameraClearFlags.Depth;
+        mainCam.rect = new Rect(0f, 0f, 0.5f, 0.5f);
     }
 
     private void RestartGame()
     {
         StopAllCoroutines();
         Destroy(mazeInstance.gameObject);
-        BeginGame();
+        if (playerInstance != null)
+        {
+            Destroy(playerInstance.gameObject);
+        }
+
+        StartCoroutine(BeginGame());
     }
 }
