@@ -39,14 +39,19 @@ public class Maze : MonoBehaviour
     public IEnumerator Generate()
     {
         WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
-        //yield return delay;
+        yield return delay;
         cells = new MazeCell[size.x, size.z];
         List<MazeCell> activeCells = new List<MazeCell>();
         DoFirstGenerationStep(activeCells);
         while (activeCells.Count > 0)
         {
-            yield return delay;
+            //yield return delay;
             DoNextGenerationStep(activeCells);
+        }
+
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            rooms[i].Hide();
         }
     }
 
